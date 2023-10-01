@@ -105,7 +105,12 @@ const { callbackToQueue }                                 = require('../models/c
       }
     };
 
-    channel.consume(queue, callback, { noAck: false });
+    const retryExchange = 'jobs_events_exchange_retry';
+    await channel.assertExchange(retryExchange, 'direct');
+    const assertQueueResponse = await channel.assertQueue(queue, { durable: false, arguments: { 'x-dead-letter-exchange': retryExchange } });
+    if (assertQueueResponse) {
+        channel.consume(queue, callback, { noAck: false });
+    }
     console.log(' [*] Waiting for messages. To exit, press CTRL+C');
   } catch (error) {
     console.error('Error:', error.message);
