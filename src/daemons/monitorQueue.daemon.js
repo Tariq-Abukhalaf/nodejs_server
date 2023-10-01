@@ -1,28 +1,25 @@
 const axios        = require('axios');
 const server       = require('../utils/server.class');
 const {isNegative} = require('../utils/helper.util');
+require('dotenv').config();
 
 async function adjustServers(serverObj,queueLength, existingServers) 
 {
-  const queueLengthPerServer = 5;
+  const queueLengthPerServer = parseInt(process.env.PER_SERVER);
   const totalServersNeeded   = Math.ceil(queueLength / queueLengthPerServer);
   const serversDifference    = existingServers - totalServersNeeded;
   if (serversDifference > 0) {	  
     await serverObj.terminateRandomInstance();
   } else if (serversDifference < 0) {
     /**
-     * 
      * Instance Type: t4g.medium
      * vCPUs: 2
      * Memory: 4 GB
      * ARM-based (Graviton2)
-     * 
      * This instance type should be suitable for running a Node.js server alongside Puppeteer for taking screenshots of web pages. 
-     * It offers a decent amount of CPU and memory resources to handle both tasks effectively. 
-     * 
+     * It offers a decent amount of CPU and memory resources to handle both tasks effectively.
      */
-    // await serverObj.launchNewInstance('slave','t4g.medium','ami-0ef131350923f509a');
-    await serverObj.launchNewInstance('slave','t4g.medium','ami-05d0fa2bc2237fb7e','nodejs-ssh-key',['sg-03c919ae5de44b00e','sg-0f9884e7087e927bc']);
+    await serverObj.launchNewInstance('slave','t4g.medium','ami-0f8d1e99fcc2ad079','nodejs-ssh-key',['sg-03c919ae5de44b00e','sg-0f9884e7087e927bc']);
   } else {
     console.log("No server adjustments needed.");
   }
@@ -79,7 +76,7 @@ function set_minutes(m)
   return intervalInMilliseconds;
 }
 
-const mins = set_minutes(2);
+const mins = set_minutes(parseInt(process.env.DAEMON_RUNTIME_MINUTES));
 setInterval(getQueueLength,mins ,'jobs_events');
 
 

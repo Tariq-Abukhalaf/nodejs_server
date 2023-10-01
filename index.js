@@ -33,7 +33,7 @@ app.use('/',dashboardRouter);
 app.use('/jobs',checkUrl,checkCallback,checkWidth,checkHeight,jobsRouter);
 
 app.listen(port, () => {
-  console.log(`${serverName} is running at http://localhost:${port}`);
+  console.log(`Server is running at http://${serverName}:${port}`);
 });
 
 
