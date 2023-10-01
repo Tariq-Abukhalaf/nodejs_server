@@ -12,7 +12,6 @@
     "consumer": "node src/commands/consumer.command.js",
     "callback": "node src/commands/consumerCallback.command.js",
     "monitor": "node src/daemons/monitorQueue.daemon.js",
-    "deploy": "./init.sh"
   },
   "keywords": [],
   "author": "tareq abukhalaf",
