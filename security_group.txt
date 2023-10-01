@@ -1,0 +1,7 @@
+[express server]
+custom tcp 8080 0.0.0.0/0
+[mongo]
+custom tcp 27017 0.0.0.0/0
+[rmq]
+custom tcp 5672 0.0.0.0/0
+custom tcp 15672 0.0.0.0/0

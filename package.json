@@ -11,7 +11,7 @@
     "test": "node test.js",
     "consumer": "node src/commands/consumer.command.js",
     "callback": "node src/commands/consumerCallback.command.js",
-    "monitor": "node src/daemons/monitorQueue.daemon.js",
+    "monitor": "node src/daemons/monitorQueue.daemon.js"
   },
   "keywords": [],
   "author": "tareq abukhalaf",

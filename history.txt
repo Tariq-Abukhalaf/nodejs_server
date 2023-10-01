@@ -90,3 +90,9 @@ sudo service rabbitmq-server status
 
 [reboot]
 sudo reboot
+
+[run pm2 background]
+pm2 start index.js --name="api"
+pm2 save
+pm2 start src/daemons/monitorQueue.daemon.js --name="daemon"
+pm2 save
