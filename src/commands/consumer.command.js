@@ -108,6 +108,7 @@ const { callbackToQueue }                                 = require('../models/c
     channel.consume(queue, callback, { noAck: false });
     console.log(' [*] Waiting for messages. To exit, press CTRL+C');
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error:', error.message);
+    process.exit(1);
   }
 })();
