@@ -96,3 +96,7 @@ pm2 start index.js --name="api"
 pm2 save
 pm2 start src/daemons/monitorQueue.daemon.js --name="daemon"
 pm2 save
+
+[advance pm2]
+pm2 start ecosystem.config.js
+pm2 save
