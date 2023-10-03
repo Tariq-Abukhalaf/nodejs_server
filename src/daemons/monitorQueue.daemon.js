@@ -5,10 +5,16 @@ require('dotenv').config();
 
 async function adjustServers(serverObj,queueLength, existingServers) 
 {
+  const INSTANCE_NAME   = process.env.INSTANCE_NAME;
+  const INSTANCE_TYPE   = process.env.INSTANCE_TYPE;
+  const AMI             = process.env.AMI;
+  const SSH_KEY_NAME    = process.env.SSH_KEY_NAME;
+  const SECURITY_GROUPS = process.env.SECURITY_GROUPS.split(",");
+
   const queueLengthPerServer = parseInt(process.env.PER_SERVER);
   const totalServersNeeded   = Math.ceil(queueLength / queueLengthPerServer);
   const serversDifference    = existingServers - totalServersNeeded;
-  if (serversDifference > 0) {	  
+  if (serversDifference > 0) {
     await serverObj.terminateRandomInstance();
   } else if (serversDifference < 0) {
     /**
@@ -19,7 +25,7 @@ async function adjustServers(serverObj,queueLength, existingServers)
      * This instance type should be suitable for running a Node.js server alongside Puppeteer for taking screenshots of web pages. 
      * It offers a decent amount of CPU and memory resources to handle both tasks effectively.
      */
-    await serverObj.launchNewInstance('slave','t4g.medium','ami-0f8d1e99fcc2ad079','nodejs-ssh-key',['sg-03c919ae5de44b00e','sg-0f9884e7087e927bc']);
+    await serverObj.launchNewInstance(INSTANCE_NAME,INSTANCE_TYPE,AMI,SSH_KEY_NAME,SECURITY_GROUPS);
   } else {
     console.log("No server adjustments needed.");
   }

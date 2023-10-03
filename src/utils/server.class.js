@@ -128,10 +128,9 @@ class server
     {
 	// Define the user data script
 	const userData = `
-  	  #!/bin/bash
-  	  pm2 start src/commands/consumer.command.js
-	  pm2 start src/commands/consumerCallback.command.js
-	`;
+	  #!/bin/bash
+          cd nodejs/
+	  mkdir mother`;
         const params = {
             ImageId: imageId,
             InstanceType: instanceType,
